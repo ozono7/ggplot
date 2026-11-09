@@ -13,18 +13,20 @@
 # Descripción: Un ejercicio con gráficos de distribución (histograma,
 #   densidad y violín) de la familia de gráficos de
 #   https://r-graph-gallery.com/ (sección Distribution). Usamos mediciones
-#   reales de densidad óptica (OD680) de Chlorella vulgaris cultivada con
-#   luz azul, luz blanca (control) y luz roja. Todo se calcula de cero: los datos van primero
-#   como mediciones reales (CSV) y cada valor se deriva de los datos.
+#   de densidad óptica (OD680) de Chlorella vulgaris cultivada con
+#   luz azul, luz blanca (control) y luz roja. Los valores son simulados
+#   con fines didácticos, con magnitudes realistas. Todo se calcula de
+#   cero: los datos van primero como mediciones en un archivo CSV y cada
+#   valor se deriva de los datos.
 #
-# Nota sobre el diseño: este conjunto de datos solo tiene dos tratamientos
-#   (luz azul y luz roja). No incluye un control con luz blanca, así que
-#   la comparación es entre azul y roja, no contra un control. En un
-#   experimento completo, el control con luz blanca sería necesario.
+# Nota sobre el diseño: el conjunto de datos tiene tres tratamientos
+#   (luz azul, luz blanca como control y luz roja), con n = 3 réplicas
+#   por día y tratamiento. La comparación es de cada luz contra el
+#   control con luz blanca.
 #
 # Objetivos de aprendizaje:
 #   - Hacer un histograma y una curva de densidad con ggplot2.
-#   - Comparar dos tratamientos con un gráfico de violín + caja.
+#   - Comparar tres tratamientos con un gráfico de violín + caja.
 #   - Personalizar colores, títulos y tema para un gráfico claro.
 #
 # Requisitos: tidyverse.
@@ -40,7 +42,7 @@
 library(tidyverse)
 
 # --------------------------------------------------------------------------
-# 2. Leer los datos (mediciones reales, formato largo)
+# 2. Leer los datos (mediciones en formato largo)
 # --------------------------------------------------------------------------
 datos <- read_csv("datos_od680_chlorella.csv", show_col_types = FALSE)
 
@@ -49,7 +51,24 @@ glimpse(datos)
 summary(datos$od680)
 
 # --------------------------------------------------------------------------
-# 3. Histograma + densidad de OD680 (todas las mediciones)
+# 3. Resumen numérico por tratamiento (calculado de los datos)
+# --------------------------------------------------------------------------
+resumen <- datos %>%
+  group_by(tratamiento) %>%
+  summarise(
+    n = n(),
+    media = mean(od680),
+    mediana = median(od680),
+    desviacion = sd(od680),
+    minimo = min(od680),
+    maximo = max(od680),
+    .groups = "drop"
+  )
+
+print(resumen)
+
+# --------------------------------------------------------------------------
+# 4. Histograma + densidad de OD680 (todas las mediciones)
 # --------------------------------------------------------------------------
 # ¿Cómo se distribuyen las mediciones de OD680? Un histograma muestra la
 # forma de la distribución; la curva de densidad la suaviza. Como los datos
@@ -72,7 +91,8 @@ grafica_hist <- ggplot(datos, aes(x = od680)) +
   theme_bw(base_size = 13)
 
 print(grafica_hist)
-ggsave("01_histograma_od680.png", grafica_hist, width = 8, height = 5, dpi = 300)
+ggsave("01_histograma_od680.png", grafica_hist,
+       width = 20, height = 13, units = "cm", dpi = 300)
 
 # --------------------------------------------------------------------------
 # Interpretación: histograma + densidad de OD680
@@ -96,10 +116,10 @@ ggsave("01_histograma_od680.png", grafica_hist, width = 8, height = 5, dpi = 300
 #   izquierda y la cola a la derecha.
 
 # --------------------------------------------------------------------------
-# 4. Violín + caja + puntos: OD680 por tratamiento de luz
+# 5. Violín + caja + puntos: OD680 por tratamiento de luz
 # --------------------------------------------------------------------------
 # El gráfico de violín muestra la forma de la distribución por tratamiento;
-# la caja muestra mediana y cuartiles; los puntos son las mediciones reales.
+# la caja muestra mediana y cuartiles; los puntos son las mediciones.
 
 grafica_violin <- ggplot(datos, aes(x = tratamiento, y = od680, fill = tratamiento)) +
   geom_violin(alpha = 0.6, color = NA) +
@@ -110,13 +130,14 @@ grafica_violin <- ggplot(datos, aes(x = tratamiento, y = od680, fill = tratamien
     x = "Tratamiento de luz",
     y = "Densidad óptica (OD680)",
     title = "OD680 de Chlorella vulgaris por tratamiento de luz",
-    subtitle = "Violín + caja + mediciones reales"
+    subtitle = "Violín + caja + puntos (mediciones)"
   ) +
   theme_bw(base_size = 13) +
   theme(legend.position = "none")
 
 print(grafica_violin)
-ggsave("01_violin_od680_por_luz.png", grafica_violin, width = 8, height = 5, dpi = 300)
+ggsave("01_violin_od680_por_luz.png", grafica_violin,
+       width = 20, height = 13, units = "cm", dpi = 300)
 
 # --------------------------------------------------------------------------
 # Interpretación: violín + caja + puntos por tratamiento de luz
@@ -128,7 +149,7 @@ ggsave("01_violin_od680_por_luz.png", grafica_violin, width = 8, height = 5, dpi
 # - Lo que se aprecia: cada violín muestra la forma de la distribución de
 #   un tratamiento. La parte ancha del violín es donde se concentran más
 #   mediciones. La caja blanca dentro muestra la mediana (línea del medio)
-#   y el 50% central de los datos. Los puntos son las mediciones reales.
+#   y el 50% central de los datos. Los puntos son las mediciones.
 #   El violín azul es más alto y más ancho arriba; el blanco (control)
 #   queda en medio y el rojo queda abajo: la azul tiene los valores
 #   mayores, la blanca los intermedios y la roja los menores.
@@ -137,23 +158,6 @@ ggsave("01_violin_od680_por_luz.png", grafica_violin, width = 8, height = 5, dpi
 #   valores más bajos que el control. La dispersión (el alto del violín
 #   y de los puntos) refleja que los valores varían entre días, porque el
 #   cultivo crece con el tiempo.
-
-# --------------------------------------------------------------------------
-# 5. Resumen numérico por tratamiento (calculado de los datos)
-# --------------------------------------------------------------------------
-resumen <- datos %>%
-  group_by(tratamiento) %>%
-  summarise(
-    n = n(),
-    media = mean(od680),
-    mediana = median(od680),
-    desviacion = sd(od680),
-    minimo = min(od680),
-    maximo = max(od680),
-    .groups = "drop"
-  )
-
-print(resumen)
 
 # --------------------------------------------------------------------------
 # Qué aprendimos
