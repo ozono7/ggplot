@@ -2,8 +2,7 @@
 
 Ejercicios con ggplot2, uno por cada tipo de gráfico de
 https://r-graph-gallery.com/, aplicados a química, bioquímica,
-microalgas, biotecnología ambiental y estadística. Los temas varían:
-no todo es microalgas ni luz azul y roja.
+microalgas, biotecnología ambiental y estadística.
 
 **Autor:** Dr. José Juan Torres Martínez
 **Docente de Ciencias Químicas, UASLP**
