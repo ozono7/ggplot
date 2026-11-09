@@ -75,6 +75,27 @@ print(grafica_hist)
 ggsave("01_histograma_od680.png", grafica_hist, width = 8, height = 5, dpi = 300)
 
 # --------------------------------------------------------------------------
+# Interpretación: histograma + densidad de OD680
+# --------------------------------------------------------------------------
+# - Eje X: densidad óptica (OD680), adimensional (no tiene unidades: es
+#   una medida de cuánta luz absorbe el cultivo a 680 nm, y crece cuando
+#   hay más células). Va de 0 (cultivo casi sin células) a poco más de 2
+#   (cultivo denso).
+# - Eje Y: densidad (de probabilidad), adimensional. No es un conteo: es
+#   la altura de la distribución. La altura de cada barra dice qué tan
+#   frecuentes son los valores en ese rango; la curva roja (densidad)
+#   suaviza el histograma.
+# - Lo que se aprecia: la mayoría de las mediciones están cerca de cero
+#   (la barra más alta, a la izquierda) y hay una cola larga hacia la
+#   derecha (valores altos, hasta ~2.2). La distribución está sesgada a
+#   la derecha: no es simétrica.
+# - Qué significa: esto es esperable porque los datos mezclan todos los
+#   días (0-10). Los días iniciales tienen OD680 casi cero y los días
+#   finales tienen OD680 alto. El histograma junta todas las fases de
+#   crecimiento en una sola distribución, por eso se ve ese pico a la
+#   izquierda y la cola a la derecha.
+
+# --------------------------------------------------------------------------
 # 4. Violín + caja + puntos: OD680 por tratamiento de luz
 # --------------------------------------------------------------------------
 # El gráfico de violín muestra la forma de la distribución por tratamiento;
@@ -98,6 +119,24 @@ print(grafica_violin)
 ggsave("01_violin_od680_por_luz.png", grafica_violin, width = 8, height = 5, dpi = 300)
 
 # --------------------------------------------------------------------------
+# Interpretación: violín + caja + puntos por tratamiento de luz
+# --------------------------------------------------------------------------
+# - Eje X: tratamiento de luz (Azul o Rojo). No es una cantidad, son dos
+#   grupos.
+# - Eje Y: densidad óptica (OD680), adimensional, igual que arriba (0 =
+#   casi sin células, 2 = cultivo denso).
+# - Lo que se aprecia: cada violín muestra la forma de la distribución de
+#   un tratamiento. La parte ancha del violín es donde se concentran más
+#   mediciones. La caja blanca dentro muestra la mediana (línea del medio)
+#   y el 50% central de los datos. Los puntos son las mediciones reales.
+#   El violín azul es más alto y más ancho arriba que el rojo: sus valores
+#   llegan más alto y se concentran en valores mayores.
+# - Qué significa: en conjunto, la luz azul da valores de OD680 más altos
+#   (mayor crecimiento) que la luz roja. La dispersión (el alto del violín
+#   y de los puntos) refleja que los valores varían entre días, porque el
+#   cultivo crece con el tiempo.
+
+# --------------------------------------------------------------------------
 # 5. Resumen numérico por tratamiento (calculado de los datos)
 # --------------------------------------------------------------------------
 resumen <- datos %>%
@@ -118,8 +157,13 @@ print(resumen)
 # Qué aprendimos
 # --------------------------------------------------------------------------
 # - El histograma y la densidad muestran la forma de la distribución de OD680.
-# - El violín compara la distribución entre luz azul y luz roja.
-# - La luz azul alcanza OD680 más altos (mayor crecimiento) que la roja.
+#   La OD680 es adimensional (no tiene unidades) y crece cuando hay más
+#   células: 0 es casi sin células y 2 es un cultivo denso.
+# - El violín compara la distribución entre luz azul y luz roja: la azul
+#   llega más alto (mayor crecimiento) que la roja.
+# - Cada gráfico necesita su interpretación: qué es cada eje (con unidades),
+#   qué patrón se ve y qué significa, para que cualquiera pueda leerlo sin
+#   que se lo expliquen. Eso es lo que hace que el material sea autodidacta.
 # - Cada punto es una medición real; nada se inventó, todo salió del CSV.
 # - Limitación: no hay control con luz blanca en estos datos, así que la
 #   comparación es solo azul contra roja.
