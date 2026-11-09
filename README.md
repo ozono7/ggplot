@@ -1,8 +1,9 @@
-# ggplot — Ejercicios llamativos con ggplot2
+# ggplot — Ejercicios con ggplot2
 
-Ejercicios muy llamativos con ggplot2, uno por cada tipo de gráfico de
-https://r-graph-gallery.com/, aplicados a microalgas, bioquímica,
-biotecnología ambiental y química.
+Ejercicios con ggplot2, uno por cada tipo de gráfico de
+https://r-graph-gallery.com/, aplicados a química, bioquímica,
+microalgas, biotecnología ambiental y estadística. Los temas varían:
+no todo es microalgas ni luz azul y roja.
 
 **Autor:** Dr. José Juan Torres Martínez
 **Docente de Ciencias Químicas, UASLP**
@@ -13,7 +14,7 @@ biotecnología ambiental y química.
   (CSV) y cada valor se deriva de los datos; nunca parámetros pre-cocinados.
 - Todos los scripts exportan sus gráficos al final con `ggsave()` **activo**
   (nunca comentado), PNG, 300 dpi.
-- Tidyverse, gráficos estilo revista científica, bien documentados en español.
+- Tidyverse, gráficos claros y bien presentados, bien documentados en español.
 
 ## Ejercicios
 

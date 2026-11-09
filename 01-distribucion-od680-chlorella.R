@@ -10,17 +10,22 @@
 # Material académico para estudiantes
 # Serie "ggplot" — Ejercicio 01
 #
-# Descripción: Un ejercicio muy llamativo con gráficos de distribución
-#   (histograma, densidad y violín) de la familia de gráficos de
+# Descripción: Un ejercicio con gráficos de distribución (histograma,
+#   densidad y violín) de la familia de gráficos de
 #   https://r-graph-gallery.com/ (sección Distribution). Usamos mediciones
 #   reales de densidad óptica (OD680) de Chlorella vulgaris cultivada con
 #   luz azul y luz roja. Todo se calcula de cero: los datos van primero
 #   como mediciones reales (CSV) y cada valor se deriva de los datos.
 #
+# Nota sobre el diseño: este conjunto de datos solo tiene dos tratamientos
+#   (luz azul y luz roja). No incluye un control con luz blanca, así que
+#   la comparación es entre azul y roja, no contra un control. En un
+#   experimento completo, el control con luz blanca sería necesario.
+#
 # Objetivos de aprendizaje:
 #   - Hacer un histograma y una curva de densidad con ggplot2.
 #   - Comparar dos tratamientos con un gráfico de violín + caja.
-#   - Personalizar colores, títulos y tema para un gráfico estilo revista.
+#   - Personalizar colores, títulos y tema para un gráfico claro.
 #
 # Requisitos: tidyverse.
 #   Instálalo con: install.packages("tidyverse")
@@ -47,7 +52,10 @@ summary(datos$od680)
 # 3. Histograma + densidad de OD680 (todas las mediciones)
 # --------------------------------------------------------------------------
 # ¿Cómo se distribuyen las mediciones de OD680? Un histograma muestra la
-# forma de la distribución; la curva de densidad la suaviza.
+# forma de la distribución; la curva de densidad la suaviza. Como los datos
+# mezclan todos los días (0-10), la mayoría de los valores están cerca de
+# cero (días iniciales) y hay una cola larga hacia valores altos (días
+# finales). Eso es esperable en datos de crecimiento.
 
 grafica_hist <- ggplot(datos, aes(x = od680)) +
   geom_histogram(
@@ -59,7 +67,7 @@ grafica_hist <- ggplot(datos, aes(x = od680)) +
     x = "Densidad óptica (OD680)",
     y = "Densidad",
     title = "Distribución de OD680 en Chlorella vulgaris",
-    subtitle = "Histograma y curva de densidad (todas las mediciones, luz azul y roja)"
+    subtitle = "Histograma y curva de densidad (todas las mediciones)"
   ) +
   theme_bw(base_size = 13)
 
@@ -81,7 +89,7 @@ grafica_violin <- ggplot(datos, aes(x = tratamiento, y = od680, fill = tratamien
     x = "Tratamiento de luz",
     y = "Densidad óptica (OD680)",
     title = "OD680 de Chlorella vulgaris por tratamiento de luz",
-    subtitle = "Violín + caja + mediciones reales (n = 3 por día, días 0-10)"
+    subtitle = "Violín + caja + mediciones reales"
   ) +
   theme_bw(base_size = 13) +
   theme(legend.position = "none")
@@ -113,3 +121,5 @@ print(resumen)
 # - El violín compara la distribución entre luz azul y luz roja.
 # - La luz azul alcanza OD680 más altos (mayor crecimiento) que la roja.
 # - Cada punto es una medición real; nada se inventó, todo salió del CSV.
+# - Limitación: no hay control con luz blanca en estos datos, así que la
+#   comparación es solo azul contra roja.
