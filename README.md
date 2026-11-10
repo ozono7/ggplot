@@ -2,7 +2,8 @@
 
 Ejercicios con ggplot2, uno por cada tipo de gráfico de
 https://r-graph-gallery.com/, aplicados a química, bioquímica,
-microalgas, biotecnología ambiental y estadística.
+microalgas, biotecnología ambiental y estadística. Los temas varían:
+no todo es microalgas ni luz azul y roja.
 
 **Autor:** Dr. José Juan Torres Martínez
 **Docente de Ciencias Químicas, UASLP**
@@ -20,3 +21,4 @@ microalgas, biotecnología ambiental y estadística.
 | # | Archivo | Tipo de gráfico |
 |---|---|---|
 | 01 | `01-distribucion-od680-chlorella.R` | Distribución: histograma + densidad + violín (OD680 de *Chlorella vulgaris*) |
+| 02 | `02-dispersion-correlacion-bradford.R` | Dispersión y correlación: curva de calibración de Bradford (BSA, absorbancia a 595 nm) |
