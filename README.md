@@ -23,3 +23,4 @@ no todo es microalgas ni luz azul y roja.
 | 01 | `01-distribucion-od680-chlorella.R` | Distribución: histograma + densidad + violín (OD680 de *Chlorella vulgaris*) |
 | 02 | `02-dispersion-correlacion-bradford.R` | Dispersión y correlación: curva de calibración de Bradford (BSA, absorbancia a 595 nm) |
 | 03 | `03-barras-ranking-adsorcion-azul-metileno.R` | Barras y ranking: adsorción de azul de metileno por adsorbente (capacidad q en mg/g) |
+| 04 | `04-lineas-evolucion-fermentacion-etanol.R` | Líneas y evolución: fermentación alcohólica con *Saccharomyces cerevisiae* (glucosa y etanol en el tiempo) |
