@@ -24,3 +24,4 @@ no todo es microalgas ni luz azul y roja.
 | 02 | `02-dispersion-correlacion-bradford.R` | Dispersión y correlación: curva de calibración de Bradford (BSA, absorbancia a 595 nm) |
 | 03 | `03-barras-ranking-adsorcion-azul-metileno.R` | Barras y ranking: adsorción de azul de metileno por adsorbente (capacidad q en mg/g) |
 | 04 | `04-lineas-evolucion-fermentacion-etanol.R` | Líneas y evolución: fermentación alcohólica con *Saccharomyces cerevisiae* (glucosa y etanol en el tiempo) |
+| 05 | `05-caja-violin-actividad-amilasa-ph.R` | Caja y violín: actividad de la alfa-amilasa según el pH (mediana, cuartiles y forma de la distribución por grupo) |
